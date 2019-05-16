@@ -20,3 +20,10 @@ class Team(models.Model):
 
   def __str__(self):
     return self.team_name
+
+  def get_score(self):
+    score = 0
+    for player in self.players.all():
+      if isinstance(player.score, int):
+        score += player.score
+    return score
