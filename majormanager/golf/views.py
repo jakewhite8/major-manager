@@ -1,4 +1,11 @@
-from django.http import HttpResponse
+from django.views import generic
 
-def index(request):
-  return HttpResponse("Golf Major Manager")
+from .models import Players, League, Team
+
+
+class IndexView(generic.ListView):
+  template_name = 'golf/index.html'
+  context_object_name = 'players_list'
+
+  def get_queryset(self):
+    return Players.objects.all()
