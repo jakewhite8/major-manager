@@ -1,11 +1,27 @@
-<h1>HelloWorld</h1>
-
-{% if players_list %}
+{% if Players %}
+  <h1>Players</h1>
   <ul>
-    {% for player in players_list %}
-      <li><span>{{player.player_name}}</span><a href="{% url 'golf:player' player.id %}">{{player.score}}</a></li>
+    {% for player in Players %}
+      <li><a href="{% url 'golf:player' player.id %}">{{player.player_name}} {{player.score}}</a></li>
     {% endfor %}
   </ul>
 {% else %}
   <p>no players avilable</p>
 {% endif %}
+
+{% if Team %}
+  <h1>Teams</h1>
+  <ul>
+    {%for team in Team%}
+    <li>
+      <span>{{team.team_name}}</span>
+      <ul>
+        {% for player in team.players.all %}
+          <li><span>{{player.player_name}} </span><span>{{player.score}}</span></li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+

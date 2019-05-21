@@ -7,12 +7,15 @@ from django.utils import timezone
 from .models import Players, League, Team
 
 
-class IndexView(generic.ListView):
+class IndexView(generic.TemplateView):
   template_name = 'golf/index.html'
-  context_object_name = 'players_list'
+  # context_object_name = 'players_list'
 
-  def get_queryset(self):
-    return Players.objects.all().order_by('score')
+  def get_context_data(self):
+    context = super(IndexView, self).get_context_data()
+    context['Players'] = Players.objects.all().order_by('score')
+    context['Team'] = Team.objects.all()
+    return context
 
 class PlayerView(generic.DetailView):
   model = Players
