@@ -1,9 +1,9 @@
-<h1>HelloWorldasdfsd</h1>
+<h1>HelloWorld</h1>
 
 {% if players_list %}
   <ul>
     {% for player in players_list %}
-      <li>{{player.player_name}} {{player.score}}</li>
+      <li><span>{{player.player_name}}</span><a href="{% url 'golf:player' player.id %}">{{player.score}}</a></li>
     {% endfor %}
   </ul>
 {% else %}
