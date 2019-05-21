@@ -20,3 +20,10 @@ class PlayerView(generic.DetailView):
 
   def get_queryset(self):
     return Players.objects.all()
+
+def update(request, player_id):
+  player = get_object_or_404(Players, pk=player_id)
+  player.score = request.POST['score']
+  player.save()
+
+  return HttpResponseRedirect(reverse('golf:index'))
