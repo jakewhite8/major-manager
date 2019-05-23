@@ -16,12 +16,14 @@ class IndexView(generic.TemplateView):
     context['Team'] = Team.objects.all()
     return context
 
-class PlayerView(generic.DetailView):
-  model = Players
+class PlayerView(generic.TemplateView):
   template_name = 'golf/update.html'
 
-  def get_queryset(self):
-    return Players.objects.all()
+  def get_context_data(self, **kwargs):
+    context = super(PlayerView, self).get_context_data()
+    context['Player'] = Players.objects.get(pk=kwargs['player_id'])
+    context['Teams'] = Team.objects.all()
+    return context
 
 def update(request, player_id):
   player = get_object_or_404(Players, pk=player_id)
