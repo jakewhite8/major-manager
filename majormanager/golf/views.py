@@ -9,7 +9,6 @@ from .models import Players, League, Team
 
 class IndexView(generic.TemplateView):
   template_name = 'golf/index.html'
-  # context_object_name = 'players_list'
 
   def get_context_data(self):
     context = super(IndexView, self).get_context_data()
