@@ -10,7 +10,11 @@
   <ul>
     {% for team in Teams %}
       <li>
-        <input type="checkbox" name="team" id=team{{forloop.counter}} value={{team.id}}>
+        <input type="checkbox" name="team" id=team{{forloop.counter}} value={{team.id}}
+        {% for player in team.players.all %}
+          {% if player.player_name == Player.player_name %} checked {% endif %}
+        {% endfor %}
+        >
         <span>{{team.team_name}}</span>
       </li>
     {% endfor %}
