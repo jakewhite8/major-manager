@@ -22,8 +22,22 @@ class Team(models.Model):
     return self.team_name
 
   def get_score(self):
-    score = 0
+    # create an array with all of a teams scores in it
+    # sort the array from lowest to highest
+    # return the total of the four best scores 
+    scores = []
     for player in self.players.all():
       if isinstance(player.score, int):
-        score += player.score
-    return score
+        scores.append(player.score)
+
+    def aggregate_of_top_four_scores(array):
+      total_score = 0
+      for score in array:
+        total_score += score
+      return total_score
+
+    if len(scores):
+      scores.sort()
+      return aggregate_of_top_four_scores(scores[:4])
+    else:
+      return False
