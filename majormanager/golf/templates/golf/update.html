@@ -1,13 +1,14 @@
 <h1>{{Player.player_name}}</h1>
-<h1>{{Player.score}}</h1>
+<h3>Current Score: {{Player.score}}</h3>
 <form action="{% url 'golf:update' Player.id %}" method="post">
   {% csrf_token %}
+  <label>Update Score:</label>
   <input type="text" name="score">
-  <input type="submit" value="Update Score">
-</form>
 
 {% if Teams %}
-  <ul>
+  <h3>Current Teams:</h3>
+  <ul style="list-style-type:none;">
+
     {% for team in Teams %}
       <li>
         <input type="checkbox" name="team" id=team{{forloop.counter}} value={{team.id}}
@@ -18,3 +19,6 @@
     {% endfor %}
   </ul>
 {% endif %}
+
+  <input type="submit" value="Update Player">
+</form>

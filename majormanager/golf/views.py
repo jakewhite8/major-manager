@@ -27,7 +27,27 @@ class PlayerView(generic.TemplateView):
 
 def update(request, player_id):
   player = get_object_or_404(Players, pk=player_id)
-  player.score = request.POST['score']
-  player.save()
+  
+  # if a players score has been provided, update it
+  # need to throw an error here when the score is not a valid number
+  if len(request.POST['score']) and request.POST['score'].isdigit():
+    player.score = request.POST['score']
+    player.save()
+  
+  # compare the players current list of teams with the ones submitted 
+  # and updated accordingly
+  players_current_teams = [team.id for team in player.team_set.all()]
+  if len(players_current_teams):
+    players_current_teams.sort()
+
+  updated_team_ids = request.POST.getlist('team')
+  if len(updated_team_ids):
+    updated_team_ids.sort()
+
+  if players_current_teams != updated_team_ids:
+    # make a list of the players new Team set based off 
+    # the ids recieved from the request
+    updated_teams = Team.objects.filter(id__in=updated_team_ids)
+    player.team_set.set(updated_teams)
 
   return HttpResponseRedirect(reverse('golf:index'))
