@@ -1,10 +1,11 @@
 {% if Players %}
   <h1>Players</h1>
-  <ul>
+  <ul style="list-style-type:none;">
     {% for player in Players %}
       <li><a href="{% url 'golf:player' player.id %}">{{player.player_name}} {{player.score}}</a></li>
     {% endfor %}
   </ul>
+  <a href="{% url 'golf:add_player' %}">Add Player</a>
 {% else %}
   <p>no players avilable</p>
 {% endif %}

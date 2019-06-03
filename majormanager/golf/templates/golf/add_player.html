@@ -1,0 +1,11 @@
+<h1>Add Player</h1>
+<form action="{% url 'golf:create_player' %}" method="post">
+  {% csrf_token %}
+  <div>
+    <label>Player Name: </label><input type="text" name="player_name">
+  </div>
+  <div>
+    <label>Score: </label><input type="number" name="score">
+  </div>
+<input type="submit" value="Create Player">
+</form>

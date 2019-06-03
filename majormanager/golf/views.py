@@ -25,12 +25,22 @@ class PlayerView(generic.TemplateView):
     context['Teams'] = Team.objects.all()
     return context
 
+class AddPlayer(generic.TemplateView):
+  template_name = 'golf/add_player.html'
+
 def update(request, player_id):
   player = get_object_or_404(Players, pk=player_id)
   
   # if a players score has been provided, update it
   # need to throw an error here when the score is not a valid number
-  if len(request.POST['score']) and request.POST['score'].isdigit():
+  def is_digit(number):
+    try:
+      int(number)
+      return True
+    except ValueError:
+      return False
+
+  if len(request.POST['score']) and is_digit(request.POST['score']):
     player.score = request.POST['score']
     player.save()
   
@@ -50,4 +60,11 @@ def update(request, player_id):
     updated_teams = Team.objects.filter(id__in=updated_team_ids)
     player.team_set.set(updated_teams)
 
+  return HttpResponseRedirect(reverse('golf:index'))
+
+def create_player(request):
+  new_player_name = request.POST['player_name']
+  new_player_score = request.POST['score']
+  new_player = Players(player_name=new_player_name, score=new_player_score)
+  new_player.save()
   return HttpResponseRedirect(reverse('golf:index'))
