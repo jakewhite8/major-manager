@@ -62,6 +62,11 @@ def update(request, player_id):
 
   return HttpResponseRedirect(reverse('golf:index'))
 
+def delete_player(request, player_id):
+  player = get_object_or_404(Players, pk=player_id)
+  player.delete()
+  return HttpResponseRedirect(reverse('golf:index'))
+
 def create_player(request):
   new_player_name = request.POST['player_name']
   new_player_score = request.POST['score']

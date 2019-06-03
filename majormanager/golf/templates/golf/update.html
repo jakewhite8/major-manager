@@ -8,7 +8,6 @@
 {% if Teams %}
   <h3>Current Teams:</h3>
   <ul style="list-style-type:none;">
-
     {% for team in Teams %}
       <li>
         <input type="checkbox" name="team" id=team{{forloop.counter}} value={{team.id}}
@@ -22,3 +21,4 @@
 
   <input type="submit" value="Update Player">
 </form>
+<a href="{% url 'golf:delete_player' Player.id %}">Delete Player</a>
