@@ -1,3 +1,4 @@
+<a href="{% url 'golf:index' %}">Home</a>
 <h1>{{Player.player_name}}</h1>
 <h3>Current Score: {{Player.score}}</h3>
 <form action="{% url 'golf:update' Player.id %}" method="post">

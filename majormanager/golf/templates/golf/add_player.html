@@ -1,3 +1,4 @@
+<a href="{% url 'golf:index' %}">Home</a>
 <h1>Add Player</h1>
 <form action="{% url 'golf:create_player' %}" method="post">
   {% csrf_token %}
