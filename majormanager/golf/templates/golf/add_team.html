@@ -1,0 +1,9 @@
+<a href="{% url 'golf:index' %}">Home</a>
+<h1>Add Team</h1>
+<form action="{% url 'golf:create_team' %}" method="post">
+  {% csrf_token %}
+  <div>
+    <label>Team Name: </label><input type="text" name="team_name">
+  </div>
+<input type="submit" value="Create Team">
+</form>

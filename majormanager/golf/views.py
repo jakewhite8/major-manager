@@ -28,6 +28,9 @@ class PlayerView(generic.TemplateView):
 class AddPlayer(generic.TemplateView):
   template_name = 'golf/add_player.html'
 
+class AddTeam(generic.TemplateView):
+  template_name = 'golf/add_team.html'
+
 def update(request, player_id):
   player = get_object_or_404(Players, pk=player_id)
   
@@ -72,4 +75,11 @@ def create_player(request):
   new_player_score = request.POST['score']
   new_player = Players(player_name=new_player_name, score=new_player_score)
   new_player.save()
+  return HttpResponseRedirect(reverse('golf:index'))
+
+def create_team(request):
+  new_team_name = request.POST['team_name']
+  pga_championship = League.objects.get(pk=1)
+  new_team = Team(team_name=new_team_name, league=pga_championship)
+  new_team.save()
   return HttpResponseRedirect(reverse('golf:index'))
