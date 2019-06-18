@@ -10,7 +10,8 @@
     <label>Players:</label>
     <ul>
       {% for player in Players %}
-      <li>{{player.player_name}}</li>
+      <li>
+        <input type="checkbox" name="players" id=player{{forloop.counter}} value="{{player.id}}">{{player.player_name}}</li>
       {% endfor %}
     </ul>
   </div>

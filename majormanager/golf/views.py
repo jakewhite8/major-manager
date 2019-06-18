@@ -1,3 +1,4 @@
+import pdb
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -84,7 +85,12 @@ def create_player(request):
 
 def create_team(request):
   new_team_name = request.POST['team_name']
+  player_ids = request.POST.getlist('players')
   pga_championship = League.objects.get(pk=1)
   new_team = Team(team_name=new_team_name, league=pga_championship)
   new_team.save()
+  if len(player_ids):
+    players = Players.objects.filter(id__in=player_ids)
+    # pdb.set_trace()
+    new_team.players.set(players)
   return HttpResponseRedirect(reverse('golf:index'))
