@@ -12,7 +12,7 @@ class IndexView(generic.TemplateView):
 
   def get_context_data(self):
     context = super(IndexView, self).get_context_data()
-    context['Players'] = Players.objects.all().order_by('score')
+    context['Players'] = Players.objects.all().order_by('player_name')
     context['Team'] = Team.objects.all()
     return context
 
@@ -25,11 +25,16 @@ class PlayerView(generic.TemplateView):
     context['Teams'] = Team.objects.all()
     return context
 
-class AddPlayer(generic.TemplateView):
+class AddPlayerView(generic.TemplateView):
   template_name = 'golf/add_player.html'
 
-class AddTeam(generic.TemplateView):
+class AddTeamView(generic.TemplateView):
   template_name = 'golf/add_team.html'
+
+  def get_context_data(self, **kwargs):
+    context = super(AddTeamView, self).get_context_data()
+    context['Players'] = Players.objects.all()
+    return context
 
 def update(request, player_id):
   player = get_object_or_404(Players, pk=player_id)
