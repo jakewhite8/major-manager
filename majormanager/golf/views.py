@@ -29,6 +29,15 @@ class PlayerView(generic.TemplateView):
 class AddPlayerView(generic.TemplateView):
   template_name = 'golf/add_player.html'
 
+class TeamView(generic.TemplateView):
+  template_name = 'golf/team.html'
+
+  def get_context_data(self, **kwargs):
+    context = super(TeamView, self).get_context_data()
+    context['Player'] = Players.objects.all()
+    context['Teams'] = Team.objects.get(pk=kwargs['team_id'])
+    return context
+
 class AddTeamView(generic.TemplateView):
   template_name = 'golf/add_team.html'
 

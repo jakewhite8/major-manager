@@ -15,7 +15,7 @@
   <ul>
     {%for team in Team%}
     <li>
-      <span>{{team.team_name}}: {{team.get_score}}</span>
+      <span><a href="{% url 'golf:team' team.id %}">{{team.team_name}}: {{team.get_score}}</a></span>
       <ul>
         {% for player in team.players.all %}
           <li><span>{{player.player_name}} </span><span>{{player.score}}</span></li>
@@ -27,3 +27,6 @@
   <a href="{% url 'golf:add_team' %}">Add Team</a>
 {% endif %}
 
+<script type="text/javascript">
+  
+</script>
