@@ -1,1 +1,18 @@
-{{Teams.team_name}}
+<a href="{% url 'golf:index' %}">Home</a>
+<h1>{{Team.team_name}}</h1>
+<h3>Current Score: {{Team.get_score}}</h3>
+<form action="{% url 'golf:update_team' Team.id %}" method="post">
+  {% csrf_token %}
+  <h3>Current Players:</h3>
+  <ul style="list-style-type: none">
+    {% for player in Players %}
+    <li>
+      <input type="checkbox" name="player" id=player{{forloop.counter}} value={{player.id}}
+        {% if player in Team.players.all %} checked {% endif %}
+      >
+      <span>{{player.player_name}}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  <input type="submit" value="Update Team">
+</form>

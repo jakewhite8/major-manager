@@ -34,8 +34,8 @@ class TeamView(generic.TemplateView):
 
   def get_context_data(self, **kwargs):
     context = super(TeamView, self).get_context_data()
-    context['Player'] = Players.objects.all()
-    context['Teams'] = Team.objects.get(pk=kwargs['team_id'])
+    context['Players'] = Players.objects.all()
+    context['Team'] = Team.objects.get(pk=kwargs['team_id'])
     return context
 
 class AddTeamView(generic.TemplateView):
@@ -78,6 +78,23 @@ def update(request, player_id):
     updated_teams = Team.objects.filter(id__in=updated_team_ids)
     player.team_set.set(updated_teams)
 
+  return HttpResponseRedirect(reverse('golf:index'))
+
+def update_team(request, team_id):
+  team = get_object_or_404(Team, pk=team_id)
+
+  team_current_players = [player.id for player in team.players.all()]
+  if len(team_current_players):
+    team_current_players.sort()
+
+  updated_player_ids = request.POST.getlist('player')
+  if len(updated_player_ids):
+    updated_player_ids.sort()
+
+  if team_current_players != updated_player_ids:
+    updated_players = Players.objects.filter(id__in=updated_player_ids)
+    team.players.set(updated_players)
+  
   return HttpResponseRedirect(reverse('golf:index'))
 
 def delete_player(request, player_id):
